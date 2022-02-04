@@ -10,8 +10,8 @@
 クラシックなクエリの書き方だと下記のようになるかもしれません。
 
 ```4d
-ALL RECORDS([Customer])  //すべての顧客につき
 CREATE EMPTY SET([Customer]; "customers")
+ALL RECORDS([Customer])  //すべての顧客につき
 For ($i; 1; Records in selection([Customer]))
 	RELATE MANY([Customer])  //売上を抽出
 	ORDER BY([Purchase]; [Purchase]date; >)  //直近購入日の売上データ
