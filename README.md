@@ -14,7 +14,7 @@ CREATE EMPTY SET([Customer]; "customers")
 ALL RECORDS([Customer])  //すべての顧客につき
 For ($i; 1; Records in selection([Customer]))
 	RELATE MANY([Customer])  //売上を抽出
-	ORDER BY([Purchase]; [Purchase]date; >)  //直近購入日の売上データ
+	ORDER BY([Purchase]; [Purchase]date; <)  //直近購入日の売上データ
 	If ([Purchase]status="foo")  //条件を満たしていれば
 		ADD TO SET([Customer]; "customers")  //セットに追加する
 	End if 
