@@ -68,7 +68,7 @@ $customers:=ds.Customer.getCustomersWithLastPurchaseStatus("foo")
 
 まず，セット演算やループなどのプログラミングが省略され，コードがシンプルかつ直感的です。
 
-クエリプランとクエリパスも出力させることができます。
+舞台裏を覗きたければ，クエリプランとクエリパスを出力させることができます。
 
 ```4d
 $options:=New object("queryPlan"; True; "queryPath"; True)
@@ -119,3 +119,5 @@ $purchases:=ds.Purchase.getLastPurchasesWithStatus("foo"; $options)
 インデックスクエリ・リレーション・フォーミュラによるクエリと`AND`演算をデータベースエンジン内で組み合わせて実行していることがわかります。
 
 クライアント側でループ処理をしているわけではなく，リクエストを投げてレスポンスを受け取っているだけなので，ネットワーク通信も最小限に抑えることができます。
+
+そのままREST APIとして公開し，[外部システムからHTTPでこのクエリを呼び出す](https://developer.4d.com/docs/ja/REST/classFunctions.html)こともできます。
