@@ -28,3 +28,39 @@ CLEAR SET("customers")
 ```
 
 仮に顧客が`4000`あれば`4000`回のループ処理の中でセット演算を実行します。ロジックはシンプルですが，`NEXT RECORD` `ADD TO SET`のようにネットワークリクエストを発生させるコマンドを多用することになり，`RELATE MANY` `ORDER BY` `QUERY SELECTION`のようなデータベース処理も多発します。もっとスマートな書き方はないのでしょうか。
+
+### どうするか
+
+`[Purchase]`テーブルのデータクラスを拡張します。
+
+```4d
+Class extends DataClass
+
+Function getLastPurchasesWithStatus($status : Text; $options : Object)->$purchases : cs.purchaseSelection
+	
+	$purchases:=This.query("status == :1 and :2"; $status; Formula(This.date=This.customer.purchases.date.max()); $options)
+```
+
+ORDAでクエリができるようになります。
+
+```4d
+$purchases:=ds.Purchase.getLastPurchasesWithStatus("foo") //売上
+$customers:=$purchases.customer //顧客
+```
+
+売上が必要なければ`[Customer]`テーブルのデータクラスを拡張することもできます。
+
+```4d
+Class extends DataClass
+
+Function getCustomersWithLastPurchaseStatus($status : Text; $options : Object)->$customers : cs.customerSelection
+	
+	$customers:=ds.Purchase.getLastPurchasesWithStatus($status; $options).customer
+```
+
+前述したクエリはこのようになります。
+
+```4d
+$customers:=ds.Customer.getCustomersWithLastPurchaseStatus("foo")
+```
+
