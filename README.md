@@ -15,7 +15,8 @@ ALL RECORDS([Customer])  //すべての顧客につき
 For ($i; 1; Records in selection([Customer]))
 	RELATE MANY([Customer])  //売上を抽出
 	ORDER BY([Purchase]; [Purchase]date; <)  //直近購入日の売上データ
-	If ([Purchase]status="foo")  //条件を満たしていれば
+	QUERY SELECTION([Purchase]; [Purchase]status="foo")  //条件を満たしていれば
+	If (Records in selection([Purchase])#0)
 		ADD TO SET([Customer]; "customers")  //セットに追加する
 	End if 
 	NEXT RECORD([Customer])
@@ -24,4 +25,4 @@ USE SET("customers")
 CLEAR SET("customers")
 ```
 
-仮に顧客が`4000`あれば`4000`回のループ処理の中でセット演算を実行します。ロジックはシンプルですが，`NEXT RECORD` `ADD TO SET`のようにネットワークリクエストを発生させるコマンドを多用することになり，`RELATE MANY` `ORDER BY`のようなデータベース処理も多発します。もっとスマートな書き方はないのでしょうか。
+仮に顧客が`4000`あれば`4000`回のループ処理の中でセット演算を実行します。ロジックはシンプルですが，`NEXT RECORD` `ADD TO SET`のようにネットワークリクエストを発生させるコマンドを多用することになり，`RELATE MANY` `ORDER BY` `QUERY SELECTION`のようなデータベース処理も多発します。もっとスマートな書き方はないのでしょうか。
