@@ -53,9 +53,9 @@ $customers:=$purchases.customer //顧客
 ```4d
 Class extends DataClass
 
-Function getCustomersWithLastPurchaseStatus($status : Text; $options : Object)->$customers : cs.customerSelection
+Function getCustomersWithLastPurchaseStatus($status : Text)->$customers : cs.customerSelection
 	
-	$customers:=ds.Purchase.getLastPurchasesWithStatus($status; $options).customer
+	$customers:=ds.Purchase.getLastPurchasesWithStatus($status).customer
 ```
 
 前述したクエリはこのようになります。
@@ -64,3 +64,54 @@ Function getCustomersWithLastPurchaseStatus($status : Text; $options : Object)->
 $customers:=ds.Customer.getCustomersWithLastPurchaseStatus("foo")
 ```
 
+### ORDAのメリット
+
+まず，セット演算やループなどのプログラミングが省略され，コードがシンプルかつ直感的です。
+
+クエリプランとクエリパスも出力させることができます。
+
+```4d
+$options:=New object("queryPlan"; True; "queryPath"; True)
+$purchases:=ds.Purchase.getLastPurchasesWithStatus("foo"; $options)
+```
+
+* クエリプラン
+
+```js
+{
+	"And": [
+		{
+			"item": "[index : Purchase.status ] == foo"
+		},
+		{
+			"item": "$(This.date=This.customer.purchases.date.max())"
+		}
+	]
+}
+```
+
+* クエリパス
+
+```js
+{
+	"steps": [
+		{
+			"description": "AND",
+			"time": 9960,
+			"recordsfounds": 1137,
+			"steps": [
+				{
+					"description": "[index : Purchase.status ] == foo",
+					"time": 0,
+					"recordsfounds": 99726
+				},
+				{
+					"description": "$(This.date=This.customer.purchases.date.max())",
+					"time": 9960,
+					"recordsfounds": 1137
+				}
+			]
+		}
+	]
+}
+```
