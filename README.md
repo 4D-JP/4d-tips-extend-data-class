@@ -31,7 +31,7 @@ CLEAR SET("customers")
 
 ### どうするか
 
-`[Purchase]`テーブルのデータクラスを拡張します。
+`[Purchase]`テーブルの[データクラスを拡張](https://developer.4d.com/docs/ja/ORDA/ordaClasses.html)します。
 
 ```4d
 Class extends DataClass
@@ -68,7 +68,7 @@ $customers:=ds.Customer.getCustomersWithLastPurchaseStatus("foo")
 
 まず，セット演算やループなどのプログラミングが省略され，コードがシンプルかつ直感的です。
 
-舞台裏を覗きたければ，クエリプランとクエリパスを出力させることができます。
+舞台裏を覗きたければ，[クエリプランとクエリパスを出力](https://developer.4d.com/docs/ja/REST/genInfo.html#querypath-%E3%81%A8-queryplan)させることができます。
 
 ```4d
 $options:=New object("queryPlan"; True; "queryPath"; True)
