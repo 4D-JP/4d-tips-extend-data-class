@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE base SYSTEM "http://www.4d.com/dtd/2007/base.dtd" >
+<base name="extend-data-class" uuid="34363E4818F9422EBF1A37F609B28C16" collation_locale="ja">
+	<schema name="DEFAULT_SCHEMA"/>
+	<table name="Customer" uuid="77E53CE386DE4A32ACBE148200D8E674" id="1">
+		<field name="id" uuid="33542287059B4B51964409302560C338" type="4" unique="true" autosequence="true" not_null="true" id="1"/>
+		<field name="name" uuid="AFCB5A8EE8E64BFEA96DA4A76B73E62F" type="10" limiting_length="255" never_null="true" id="2"/>
+		<primary_key field_name="id" field_uuid="33542287059B4B51964409302560C338"/>
+		<table_extra>
+			<editor_table_info displayable_fields_count="6">
+				<color red="255" green="255" blue="255" alpha="0"/>
+				<coordinates left="47.09765625" top="70.734375" width="120" height="167.33203125"/>
+			</editor_table_info>
+		</table_extra>
+	</table>
+	<table name="Purchase" uuid="8CAE8BEDE12A422BAFA309AB99D643B1" id="2">
+		<field name="id" uuid="BE0680E4A4DF4D0488F8A173B45888AF" type="4" unique="true" autosequence="true" not_null="true" id="1"/>
+		<field name="customer_id" uuid="88C3E99B6F084C36ABA932373CB1A95A" type="4" never_null="true" id="2"/>
+		<field name="date" uuid="E0189EA9DCFA440583B1D262A1760F9C" type="8" never_null="true" id="3"/>
+		<field name="status" uuid="197E51C8E52A4D3E845178B8343FE89C" type="10" limiting_length="255" never_null="true" id="4"/>
+		<primary_key field_name="id" field_uuid="BE0680E4A4DF4D0488F8A173B45888AF"/>
+		<table_extra>
+			<editor_table_info displayable_fields_count="6">
+				<color red="255" green="255" blue="255" alpha="0"/>
+				<coordinates left="246.8828125" top="142.7890625" width="120" height="167.33203125"/>
+			</editor_table_info>
+		</table_extra>
+	</table>
+	<relation uuid="229E6C2A4E4946C08AF3E4AB1BE39A19" name_Nto1="customer" name_1toN="purchases" auto_load_Nto1="false" auto_load_1toN="false" foreign_key="false" state="1">
+		<related_field kind="source">
+			<field_ref uuid="88C3E99B6F084C36ABA932373CB1A95A" name="customer_id">
+				<table_ref uuid="8CAE8BEDE12A422BAFA309AB99D643B1" name="Purchase"/>
+			</field_ref>
+		</related_field>
+		<related_field kind="destination">
+			<field_ref uuid="33542287059B4B51964409302560C338" name="id">
+				<table_ref uuid="77E53CE386DE4A32ACBE148200D8E674" name="Customer"/>
+			</field_ref>
+		</related_field>
+		<relation_extra entry_wildchar="false" entry_create="false" choice_field="0" entry_autofill="false">
+			<editor_relation_info via_point_x="-1" via_point_y="-1" prefers_left="true" smartlink="true">
+				<color red="255" green="255" blue="255" alpha="0"/>
+			</editor_relation_info>
+		</relation_extra>
+	</relation>
+	<index kind="regular" uuid="365971A5CB984435804935C04DD8501D" type="3">
+		<field_ref uuid="88C3E99B6F084C36ABA932373CB1A95A" name="customer_id">
+			<table_ref uuid="8CAE8BEDE12A422BAFA309AB99D643B1" name="Purchase"/>
+		</field_ref>
+	</index>
+	<index kind="regular" uuid="3E5C3587DA694B439D1BAFD0BE5303B5" type="3">
+		<field_ref uuid="197E51C8E52A4D3E845178B8343FE89C" name="status">
+			<table_ref uuid="8CAE8BEDE12A422BAFA309AB99D643B1" name="Purchase"/>
+		</field_ref>
+	</index>
+	<index kind="regular" uuid="5E8CAE4E5A06402CACC57604F1FF230D" type="1">
+		<field_ref uuid="E0189EA9DCFA440583B1D262A1760F9C" name="date">
+			<table_ref uuid="8CAE8BEDE12A422BAFA309AB99D643B1" name="Purchase"/>
+		</field_ref>
+	</index>
+	<index kind="regular" unique_keys="true" uuid="5F14F92204384C8280D0B71CE1CE2B52" type="7">
+		<field_ref uuid="BE0680E4A4DF4D0488F8A173B45888AF" name="id">
+			<table_ref uuid="8CAE8BEDE12A422BAFA309AB99D643B1" name="Purchase"/>
+		</field_ref>
+	</index>
+	<index kind="regular" unique_keys="true" uuid="8710ECE65E494997842D682011633F06" type="7">
+		<field_ref uuid="33542287059B4B51964409302560C338" name="id">
+			<table_ref uuid="77E53CE386DE4A32ACBE148200D8E674" name="Customer"/>
+		</field_ref>
+	</index>
+	<base_extra __stringCompHash="icu:68.1.0, alternate=search" __keywordBuildingHash="mecab:0.996;sys.dic:102;">
+		<journal_file journal_file_enabled="true"/>
+	</base_extra>
+</base>
